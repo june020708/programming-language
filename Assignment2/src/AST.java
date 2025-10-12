@@ -28,6 +28,10 @@ class Decls extends ArrayList<Decl> {
     // TODO: [Insert the code of display()]
 	public void display(int level){
 		// Fill code here
+        Indent.display(level, "Decls");
+        for (int i = 0; i < this.size(); i++) {
+            this.get(i).display(level + 1);
+        }
 	}    
 }
 
@@ -50,6 +54,12 @@ class Decl extends Command {
     } // declaration
    
     // TODO: [Insert the code of display()]
+    public void display(int level){
+        Indent.display(level, "Decl");
+        type.display(level + 1);
+        id.display(level + 1);
+        if(expr != null) expr.display(level + 1);
+    }
 }
 
 class Functions extends ArrayList<Function> {
@@ -88,6 +98,9 @@ class Type {
     protected Type(String s) { id = s; }
     public String toString ( ) { return id; }
     // TODO: [Insert the code of display()]
+    public void display(int level){
+        Indent.display(level, "Type: " + id);
+    }    
 }
 
 class ProtoType extends Type {
@@ -123,6 +136,12 @@ class Stmts extends Stmt {
 	     stmts.add(s);
     }
     // TODO: [Insert the code of display()]
+    public void display(int level){
+        Indent.display(level, "Stmts");
+        for (int i = 0; i < stmts.size(); i++) {
+            stmts.get(i).display(level + 1);
+        }
+	}
 }
 
 class Assignment extends Stmt {
@@ -142,6 +161,11 @@ class Assignment extends Stmt {
     }
     
     // TODO: [Insert the code of display()]
+    public void display(int level){
+        Indent.display(level, "Assignment");
+        id.display(level + 1);
+        expr.display(level + 1);
+    }
 }
 
 class If extends Stmt {
@@ -158,6 +182,12 @@ class If extends Stmt {
     }
     
     // TODO: [Insert the code of display()]
+    public void display(int level){
+        Indent.display(level, "If");
+        expr.display(level + 1);
+        stmt1.display(level + 1);
+        stmt2.display(level + 1);
+    }
 }
 
 class While extends Stmt {
@@ -170,6 +200,11 @@ class While extends Stmt {
     }
     
     // TODO: [Insert the code of display()]
+    public void display(int level){
+        Indent.display(level, "While");
+        expr.display(level + 1);
+        stmt.display(level + 1);
+    }
 }
 
 class Let extends Stmt {
@@ -191,6 +226,13 @@ class Let extends Stmt {
     }
     
     // TODO: [Insert the code of display()]
+    public void display(int level){
+        Indent.display(level, "Let");
+        decls.display(level + 1);
+        //funs.display(level + 1);
+        stmts.display(level + 1);
+    }
+
 }
 
 class Read extends Stmt {
@@ -202,6 +244,10 @@ class Read extends Stmt {
     }
     
     // TODO: [Insert the code of display()]
+    public void display(int level){
+        Indent.display(level, "Read");
+        id.display(level + 1);
+    }
 }
 
 class Print extends Stmt {
@@ -212,6 +258,10 @@ class Print extends Stmt {
         expr = e;
     }
     // TODO: [Insert the code of display()]
+    public void display(int level){
+        Indent.display(level, "Print");
+        expr.display(level + 1);
+    }
 }
 
 class Return extends Stmt {
@@ -278,6 +328,9 @@ class Identifier extends Expr {
     }
     
     // TODO: [Insert the code of display()]
+    public void display(int level){
+        Indent.display(level, "Identifier: " + id);
+    }
 }
 
 class Array extends Expr {
@@ -362,6 +415,9 @@ class Value extends Expr {
     }
     
     // TODO: [Insert the code of display()]
+    public void display(int level){
+        Indent.display(level, "Value: " + value);
+    }
 }
 
 class Binary extends Expr {
@@ -374,6 +430,12 @@ class Binary extends Expr {
     } // binary
     
     // TODO: [Insert the code of display()]
+    public void display(int level){
+        Indent.display(level, "Binary");
+        op.display(level + 1);
+        expr1.display(level + 1);
+        expr2.display(level + 1);
+    }
 }
 
 class Unary extends Expr {
@@ -387,7 +449,11 @@ class Unary extends Expr {
     } // unary
     
     // TODO: [Insert the code of display()]
-
+    public void display(int level){
+        Indent.display(level, "Unary");
+        op.display(level + 1);
+        expr.display(level + 1);
+    }
 }
 
 class Operator {
@@ -406,4 +472,7 @@ class Operator {
     }
     
     // TODO: [Insert the code of display()]
+    public void display(int level){
+        Indent.display(level, "Operator: " + val);
+    }
 }

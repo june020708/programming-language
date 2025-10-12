@@ -176,7 +176,11 @@ public class Parser {
     //
     // parse read statement
     // 
-	return null;
+        match(Token.READ);
+        Identifier id = new Identifier(match(Token.ID));
+        match(Token.SEMICOLON);
+        return new Read(id);
+        //return null;
     }
 
     // TODO: [Complete the code of printStmt()]
@@ -185,7 +189,11 @@ public class Parser {
     //
     // parse print statement
     // 
-	return null;
+        match(Token.PRINT);
+        Expr e = expr();
+        match(Token.SEMICOLON);
+        return new Print(e);
+        //return null;
     }
 
     private Return returnStmt() {
@@ -242,7 +250,13 @@ public class Parser {
     //
     // parse while statement
     //
-        return null;
+        match(Token.WHILE);
+	    match(Token.LPAREN);
+        Expr e = expr();
+	    match(Token.RPAREN);
+        Stmt s = stmt();
+        return new While(e, s);
+        //return null;
     }
 
     private Expr expr () {
@@ -265,6 +279,11 @@ public class Parser {
 		//
 		// parse logical operations
 		//
+        while (token == Token.AND || token == Token.OR) {  			
+   	        Operator op = new Operator(match(token));  
+            Expr e2 = bexp();
+            e = new Binary(op, e, e2);            
+        }
         return e;
     }
 
@@ -275,6 +294,11 @@ public class Parser {
 	//
 	// parse relational operations
 	//
+        if (token == Token.LT || token == Token.LTEQ || token == Token.GT || token == Token.GTEQ || token == Token.EQUAL || token == Token.NOTEQ){
+            Operator op = new Operator(match(token));
+            Expr e2 = aexp();
+			return new Binary(op, e, e2);
+    	}
         return e;
     }
   
@@ -373,7 +397,7 @@ public class Parser {
     public static void main(String args[]) {
 	    Parser parser;
         Command command = null;
-	    if (args.length == 0) {
+        if (args.length == 0) {
 	        System.out.print(">> ");
 	        Lexer.interactive = true;
 	        parser  = new Parser(new Lexer());
@@ -383,7 +407,7 @@ public class Parser {
 
                 try {
                     command = parser.command();
-		            // if (command != null) command.display(0);    // display AST, TODO: [Uncomment this line]
+		            if (command != null) command.display(0);    // display AST, TODO: [Uncomment this line]
                 } catch (Exception e) {
                     System.err.println(e);
                 }
@@ -399,7 +423,7 @@ public class Parser {
 
                 try {
 		             command = parser.command();
-		             // if (command != null) command.display(0);      // display AST, TODO: [Uncomment this line]
+		             if (command != null) command.display(0);      // display AST, TODO: [Uncomment this line]
                 } catch (Exception e) {
                     System.err.println(e); 
                 }
