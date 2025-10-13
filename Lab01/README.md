@@ -1,6 +1,3 @@
-# programming-language
-Study log for Programming Language course.
-
 수정 코드 설명 
 1) Subtraction (-) and division (/) 
 
