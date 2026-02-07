@@ -1,4 +1,3 @@
-# programming-language
 Study log for Programming Language course.
 
 Instructor: Prof. Soohwan Song
